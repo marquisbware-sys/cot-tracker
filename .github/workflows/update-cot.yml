@@ -1,0 +1,35 @@
+name: update-cot
+
+# COT is released Fridays ~3pm CT (20:00 UTC). We run at 21:00 UTC Friday
+# to catch the fresh data, plus allow manual runs anytime.
+
+on:
+  schedule:
+    - cron: "0 21 * * 5"   # Friday 21:00 UTC = 4pm CT, after the 3pm release
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install deps
+        run: pip install requests
+
+      - name: Run COT calculator
+        run: python calculate_cot.py
+
+      - name: Commit results
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+          git add cot_data.json
+          git diff --quiet --cached || git commit -m "Update COT $(date -u +'%Y-%m-%d %H:%M UTC')"
+          git push
