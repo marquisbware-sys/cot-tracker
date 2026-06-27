@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>COT TERMINAL</title>
+<style>
+  :root{
+    --bg:#07090b;--panel:#0d1117;--panel2:#11171f;--line:#1c2632;
+    --pos:#39ff7a;--pos-dim:#1f7a42;--neg:#ff4d5e;--neg-dim:#8a2b34;
+    --amber:#ffb238;--spot:#3da9ff;--purple:#a779ff;--txt:#cdd9e5;--txt-dim:#5b6b7c;
+    --mono:'SFMono-Regular',Consolas,'Liberation Mono',Menlo,monospace;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--bg);color:var(--txt);font-family:var(--mono);font-size:14px;
+       line-height:1.5;padding:18px 18px 60px;
+       background-image:radial-gradient(circle at 20% 0%,rgba(57,255,122,.04),transparent 40%)}
+  header{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;
+         border-bottom:1px solid var(--line);padding-bottom:12px}
+  h1{font-size:20px;font-weight:700;letter-spacing:3px;color:var(--pos);
+     text-shadow:0 0 12px rgba(57,255,122,.4)}
+  .sub{color:var(--txt-dim);font-size:11px;letter-spacing:1px}
+  nav{margin-left:auto;display:flex;gap:6px;flex-wrap:wrap}
+  nav a{color:var(--txt-dim);font-size:11px;text-decoration:none;padding:5px 10px;
+        border:1px solid var(--line);border-radius:4px;transition:.15s;letter-spacing:.5px}
+  nav a:hover{border-color:var(--pos);color:var(--pos)}
+  nav a.active{color:var(--pos);border-color:var(--pos-dim);background:rgba(57,255,122,.06)}
+  .meta{width:100%;color:var(--txt-dim);font-size:11px;margin-top:4px}
+  .meta b{color:var(--txt)}
+
+  .topbar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin:16px 0}
+  select,button{background:var(--panel);color:var(--txt);border:1px solid var(--line);
+    font-family:var(--mono);font-size:13px;padding:8px 12px;border-radius:5px}
+  select#idx{font-size:15px;font-weight:700;border-color:var(--pos-dim)}
+  button{cursor:pointer;transition:.15s}button:hover{border-color:var(--pos);color:var(--pos)}
+  button.primary{border-color:var(--pos-dim);background:rgba(57,255,122,.08);color:var(--pos)}
+
+  .ix-head{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:14px 16px;margin-bottom:14px}
+  .ix-title{font-size:17px;font-weight:700}
+  .ix-sub{font-size:11px;color:var(--txt-dim);margin-top:3px}
+  .ix-sub b{color:var(--txt)}
+  .live{display:inline-block;font-size:9px;letter-spacing:1px;color:var(--pos);
+        border:1px solid var(--pos-dim);background:rgba(57,255,122,.08);padding:2px 7px;border-radius:10px;margin-left:6px}
+
+  h2{font-size:12px;letter-spacing:2px;color:var(--txt-dim);margin:22px 0 10px;font-weight:700}
+
+  table{width:100%;border-collapse:collapse;font-size:12px;background:var(--panel);border:1px solid var(--line);border-radius:8px;overflow:hidden}
+  th,td{padding:8px 10px;text-align:center;border-bottom:1px solid var(--line)}
+  th{color:var(--txt-dim);font-weight:600;font-size:10px;letter-spacing:.5px;background:var(--panel2)}
+  td.label{text-align:left;color:var(--txt-dim);font-size:11px}
+  td.num{font-variant-numeric:tabular-nums}
+  .grp-nc{color:var(--spot)} .grp-cm{color:var(--amber)} .grp-nr{color:var(--purple)}
+  tr.wow td{font-size:11px}
+  .up{color:var(--pos)} .down{color:var(--neg)}
+
+  .keycards{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;margin-top:10px}
+  .kc{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:12px;border-top:3px solid var(--line)}
+  .kc.bull{border-top-color:var(--pos)} .kc.bear{border-top-color:var(--neg)}
+  .kc.info{border-top-color:var(--spot)} .kc.warn{border-top-color:var(--amber)}
+  .kc .tag{font-size:10px;letter-spacing:.5px;padding:2px 6px;border-radius:3px;display:inline-block;margin-bottom:8px}
+  .kc.bull .tag{color:var(--pos);background:rgba(57,255,122,.1)}
+  .kc.bear .tag{color:var(--neg);background:rgba(255,77,94,.1)}
+  .kc.info .tag{color:var(--spot);background:rgba(61,169,255,.1)}
+  .kc.warn .tag{color:var(--amber);background:rgba(255,178,56,.1)}
+  .kc .big{font-size:24px;font-weight:700;line-height:1}
+  .kc .big.up{color:var(--pos)} .kc .big.down{color:var(--neg)} .kc .big.info{color:var(--spot)}
+  .kc .desc{font-size:10px;color:var(--txt-dim);margin-top:6px;line-height:1.5}
+
+  .compare{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .cmp{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:12px}
+  .cmp .ct{font-size:11px;color:var(--txt-dim)} .cmp .cd{font-size:10px;color:var(--txt-dim);margin-top:2px}
+  .cmp .cv{font-size:20px;font-weight:700;margin-top:4px}
+  .cmp.now{border-color:var(--pos-dim)}
+  .now-badge{font-size:9px;color:var(--pos);border:1px solid var(--pos-dim);padding:1px 5px;border-radius:8px;margin-left:5px}
+
+  footer{margin-top:24px;border-top:1px solid var(--line);padding-top:10px;font-size:10px;color:var(--txt-dim);line-height:1.7}
+  .empty{color:var(--txt-dim);padding:30px;text-align:center}
+  .toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:var(--pos);
+         color:var(--bg);padding:10px 18px;border-radius:6px;font-weight:700;font-size:12px;opacity:0;transition:.3s;pointer-events:none}
+  .toast.show{opacity:1}
+  @media(max-width:600px){nav{width:100%;margin-left:0}.compare{grid-template-columns:1fr}table{font-size:11px}}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>COT TERMINAL</h1>
+  <span class="sub">commitments of traders · per-index</span>
+  <nav>
+    <a href="../em-tracker/dashboard.html">EM</a>
+    <a href="../gex-tracker/dashboard.html">GEX</a>
+    <a href="../seasonality-tracker/dashboard.html">Seasonality</a>
+    <a href="../ninja-system/system.html">System</a>
+    <a href="../ninja-system/checklist.html">Checklist</a>
+    <a href="../briefing/briefing.html">Briefing</a>
+    <a href="dashboard.html" class="active">COT</a>
+  </nav>
+  <div class="meta" id="meta">loading…</div>
+</header>
+
+<div class="topbar">
+  <select id="idx"></select>
+  <button class="primary" id="copyBtn">📋 Copy this index for Claude</button>
+  <button id="refresh">↻ refresh</button>
+</div>
+
+<div id="content"><div class="empty">loading…</div></div>
+
+<footer id="foot"></footer>
+<div class="toast" id="toast">copied — paste to Claude for the "what this means" read</div>
+
+<script>
+  const ORG='marquisbware-sys';
+  const JSON_URL=`https://raw.githubusercontent.com/${ORG}/cot-tracker/main/cot_data.json`;
+  let RAW=null, copyText='';
+
+  const f=n=>n==null?'—':n.toLocaleString();
+  const signed=n=>n==null?'—':(n>=0?'+':'')+n.toLocaleString();
+  function net(l,s){ return (l==null||s==null)?null:l-s; }
+  function pct(part,whole){ return (part==null||!whole)?'—':((part/whole*100).toFixed(1)+'%'); }
+
+  function legacyTable(weeks){
+    const w=weeks[0], p=weeks[1];
+    const oi=w.oi;
+    const cell=(v)=>`<td class="num">${f(v)}</td>`;
+    const wowCell=(cur,prev)=>{ if(cur==null||prev==null) return '<td>—</td>';
+      const d=cur-prev; return `<td class="num ${d>=0?'up':'down'}">${signed(d)}</td>`; };
+    const pctRow=(v)=>`<td class="num">${pct(v,oi)}</td>`;
+    return `<table>
+      <tr><th></th><th colspan="3" class="grp-nc">NON-COMMERCIAL</th><th colspan="2" class="grp-cm">COMMERCIAL</th><th colspan="2" class="grp-nr">NON-REPORTABLE</th></tr>
+      <tr><th></th><th>Long</th><th>Short</th><th>Spreads</th><th>Long</th><th>Short</th><th>Long</th><th>Short</th></tr>
+      <tr><td class="label">Positions</td>${cell(w.noncomm_long)}${cell(w.noncomm_short)}${cell(w.noncomm_spread)}${cell(w.comm_long)}${cell(w.comm_short)}${cell(w.nonrept_long)}${cell(w.nonrept_short)}</tr>
+      ${p?`<tr class="wow"><td class="label">W/W change</td>${wowCell(w.noncomm_long,p.noncomm_long)}${wowCell(w.noncomm_short,p.noncomm_short)}${wowCell(w.noncomm_spread,p.noncomm_spread)}${wowCell(w.comm_long,p.comm_long)}${wowCell(w.comm_short,p.comm_short)}${wowCell(w.nonrept_long,p.nonrept_long)}${wowCell(w.nonrept_short,p.nonrept_short)}</tr>`:''}
+      <tr><td class="label">% of OI</td>${pctRow(w.noncomm_long)}${pctRow(w.noncomm_short)}${pctRow(w.noncomm_spread)}${pctRow(w.comm_long)}${pctRow(w.comm_short)}${pctRow(w.nonrept_long)}${pctRow(w.nonrept_short)}</tr>
+      <tr><td class="label">Traders</td>${cell(w.traders_noncomm_long)}${cell(w.traders_noncomm_short)}<td>—</td>${cell(w.traders_comm_long)}${cell(w.traders_comm_short)}<td colspan="2">not reported</td></tr>
+    </table>`;
+  }
+
+  function disaggTable(weeks){
+    const w=weeks[0], p=weeks[1];
+    const cell=(v)=>`<td class="num">${f(v)}</td>`;
+    const wowCell=(cur,prev)=>{ if(cur==null||prev==null) return '<td>—</td>';
+      const d=cur-prev; return `<td class="num ${d>=0?'up':'down'}">${signed(d)}</td>`; };
+    const row=(lbl,l,s,pl,ps)=>`<tr><td class="label">${lbl}</td>${cell(l)}${cell(s)}<td class="num ${net(l,s)>=0?'up':'down'}">${signed(net(l,s))}</td>${p?wowCell(net(l,s),net(pl,ps)):'<td>—</td>'}</tr>`;
+    return `<table>
+      <tr><th>Category</th><th>Long</th><th>Short</th><th>Net</th><th>Net W/W</th></tr>
+      ${row('Leveraged Funds',w.lev_long,w.lev_short,p&&p.lev_long,p&&p.lev_short)}
+      ${row('Asset Managers',w.am_long,w.am_short,p&&p.am_long,p&&p.am_short)}
+      ${row('Dealers',w.dealer_long,w.dealer_short,p&&p.dealer_long,p&&p.dealer_short)}
+      ${row('Other Rept.',w.other_long,w.other_short,p&&p.other_long,p&&p.other_short)}
+    </table>`;
+  }
+
+  function keyCards(leg,dis){
+    const w=leg[0],p=leg[1];
+    const ncNet=net(w.noncomm_long,w.noncomm_short);
+    const ncNetPrev=p?net(p.noncomm_long,p.noncomm_short):null;
+    const oiChg=p?(w.oi-p.oi):null;
+    const levNet=dis?net(dis[0].lev_long,dis[0].lev_short):null;
+    const cards=[];
+    cards.push(`<div class="kc ${ncNet>=0?'bull':'bear'}"><span class="tag">Large specs (non-comm)</span>
+      <div class="big ${ncNet>=0?'up':'down'}">${signed(ncNet)}</div>
+      <div class="desc">Non-commercial net ${ncNet>=0?'long':'short'}${ncNetPrev!=null?`, ${ncNet-ncNetPrev>=0?'+':''}${(ncNet-ncNetPrev).toLocaleString()} W/W`:''}</div></div>`);
+    if(levNet!=null) cards.push(`<div class="kc ${levNet>=0?'bull':'bear'}"><span class="tag">Leveraged funds</span>
+      <div class="big ${levNet>=0?'up':'down'}">${signed(levNet)}</div>
+      <div class="desc">Hedge-fund net ${levNet>=0?'long':'short'} — your preferred read</div></div>`);
+    if(oiChg!=null) cards.push(`<div class="kc info"><span class="tag">Open interest W/W</span>
+      <div class="big info">${signed(oiChg)}</div>
+      <div class="desc">${oiChg>=0?'New money entering':'Positions liquidating'} · OI now ${f(w.oi)}</div></div>`);
+    const commNet=net(w.comm_long,w.comm_short);
+    cards.push(`<div class="kc warn"><span class="tag">Commercials (hedgers)</span>
+      <div class="big">${signed(commNet)}</div>
+      <div class="desc">Hedger net ${commNet>=0?'long':'short'} — context, not a signal alone</div></div>`);
+    return `<div class="keycards">${cards.join('')}</div>`;
+  }
+
+  function comparison(leg){
+    if(leg.length<2) return '';
+    const w=leg[0], old=leg[Math.min(leg.length-1,5)];
+    const curNet=net(w.noncomm_long,w.noncomm_short);
+    const oldNet=net(old.noncomm_long,old.noncomm_short);
+    const pctChg=oldNet?(((curNet-oldNet)/Math.abs(oldNet))*100).toFixed(0):'—';
+    return `<h2>${old.date} → ${w.date} — HOW POSITIONING SHIFTED</h2>
+    <div class="compare">
+      <div class="cmp"><div class="ct">Non-commercial net (${old.date})</div>
+        <div class="cv ${oldNet>=0?'up':'down'}">${signed(oldNet)}</div>
+        <div class="cd">Large specs net ${oldNet>=0?'long':'short'}</div></div>
+      <div class="cmp now"><div class="ct">Non-commercial net (${w.date})<span class="now-badge">now</span></div>
+        <div class="cv ${curNet>=0?'up':'down'}">${signed(curNet)}</div>
+        <div class="cd">${pctChg!=='—'?`${pctChg>0?'+':''}${pctChg}% ${Math.abs(curNet)>Math.abs(oldNet)?'more extreme':'less extreme'} over ${leg.length-1} wks`:''}</div></div>
+      <div class="cmp"><div class="ct">Open interest (${old.date})</div>
+        <div class="cv">${f(old.oi)}</div></div>
+      <div class="cmp now"><div class="ct">Open interest (${w.date})<span class="now-badge">now</span></div>
+        <div class="cv">${f(w.oi)}</div>
+        <div class="cd">${w.oi>=old.oi?'higher participation':'lower participation'}</div></div>
+    </div>`;
+  }
+
+  function buildCopyText(ix){
+    const leg=ix.legacy, dis=ix.disagg;
+    const w=leg[0],p=leg[1];
+    const L=[];
+    L.push(`COT — ${ix.name} (${ix.code}) — week of ${w.date}`);
+    L.push(`Open interest: ${f(w.oi)}${p?` (W/W ${signed(w.oi-p.oi)})`:''}`);
+    L.push('');
+    L.push('LEGACY (Futures Only):');
+    L.push(`  Non-commercial: ${f(w.noncomm_long)} long / ${f(w.noncomm_short)} short / ${f(w.noncomm_spread)} spread → net ${signed(net(w.noncomm_long,w.noncomm_short))}`);
+    if(p) L.push(`    W/W: long ${signed(w.noncomm_long-p.noncomm_long)}, short ${signed(w.noncomm_short-p.noncomm_short)}`);
+    L.push(`  Commercial: ${f(w.comm_long)} long / ${f(w.comm_short)} short → net ${signed(net(w.comm_long,w.comm_short))}`);
+    L.push(`  Non-reportable: ${f(w.nonrept_long)} long / ${f(w.nonrept_short)} short → net ${signed(net(w.nonrept_long,w.nonrept_short))}`);
+    if(dis){ const d=dis[0];
+      L.push('');
+      L.push('DISAGGREGATED:');
+      L.push(`  Leveraged funds: ${f(d.lev_long)} long / ${f(d.lev_short)} short → net ${signed(net(d.lev_long,d.lev_short))}`);
+      L.push(`  Asset managers: net ${signed(net(d.am_long,d.am_short))}`);
+    }
+    if(leg.length>1){ const old=leg[Math.min(leg.length-1,5)];
+      L.push('');
+      L.push(`${leg.length-1}-week shift: non-comm net ${signed(net(old.noncomm_long,old.noncomm_short))} → ${signed(net(w.noncomm_long,w.noncomm_short))}`);
+    }
+    L.push('');
+    L.push('Give me the "what this means for my trades this week" read — bias, flip-signal watch, OI interpretation. My style: SPX/TSLA intraday, puts-preferred, EOD flatten.');
+    return L.join('\n');
+  }
+
+  function render(){
+    if(!RAW) return;
+    const code=document.getElementById('idx').value;
+    const ix=(RAW.contracts||[]).find(c=>c.code===code);
+    const el=document.getElementById('content');
+    if(!ix){ el.innerHTML='<div class="empty">No data for this index.</div>'; return; }
+    const leg=ix.legacy||[], dis=ix.disagg||null;
+    const w=leg[0]||{};
+    copyText=buildCopyText(ix);
+
+    el.innerHTML =
+      `<div class="ix-head"><div class="ix-title">${ix.name} — CME · Futures Only<span class="live">CFTC official</span></div>
+        <div class="ix-sub">As of <b>${w.date||'—'}</b> · Open Interest: <b>${f(w.oi)}</b></div></div>`
+      + (leg.length?`<h2>LEGACY — RAW DATA (color-coded by group)</h2>${legacyTable(leg)}`:'')
+      + (leg.length?`<h2>KEY NUMBERS TO WATCH</h2>${keyCards(leg,dis)}`:'')
+      + (dis?`<h2>DISAGGREGATED — INSTITUTIONAL BREAKDOWN</h2>${disaggTable(dis)}`:'')
+      + comparison(leg);
+  }
+
+  async function load(){
+    try{
+      const r=await fetch(JSON_URL+'?t='+Date.now());
+      if(!r.ok) throw new Error('HTTP '+r.status);
+      RAW=await r.json();
+      const sel=document.getElementById('idx');
+      sel.innerHTML=(RAW.contracts||[]).map(c=>`<option value="${c.code}">${c.name}</option>`).join('');
+      document.getElementById('meta').innerHTML=`report week <b>${RAW.report_date||'—'}</b> · updated <b>${RAW.generated_utc||'—'}</b>`;
+      document.getElementById('foot').innerHTML=`Source: CFTC public reporting (free, official). ${RAW.note||''} Copy an index and paste to Claude for the written "what this means" analysis.`;
+      render();
+    }catch(e){
+      document.getElementById('content').innerHTML=`<div class="empty">Could not load data.<br>${e.message}<br><br>Run the workflow once, then hard-refresh.</div>`;
+      document.getElementById('meta').textContent='load error';
+    }
+  }
+
+  function copyIt(){ navigator.clipboard.writeText(copyText).then(()=>{
+    const t=document.getElementById('toast'); t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }); }
+
+  document.getElementById('idx').addEventListener('change',render);
+  document.getElementById('refresh').addEventListener('click',load);
+  document.getElementById('copyBtn').addEventListener('click',copyIt);
+  load();
+</script>
+</body>
+</html>
