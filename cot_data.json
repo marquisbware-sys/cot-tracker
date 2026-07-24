@@ -1,6 +1,6 @@
 {
-  "generated_utc": "2026-07-17 21:56:09 UTC",
-  "report_date": "2026-07-14",
+  "generated_utc": "2026-07-24 22:07:07 UTC",
+  "report_date": "2026-07-21",
   "note": "COT reflects each Tuesday's positioning, released Fri ~3pm CT. Weekly, lagged bias tool \u2014 not an intraday signal.",
   "errors": [
     "NQ"
@@ -10,6 +10,38 @@
       "name": "S&P 500 E-Mini",
       "code": "SP",
       "legacy": [
+        {
+          "date": "2026-07-21",
+          "oi": 200196,
+          "noncomm_long": 34263,
+          "noncomm_short": 76163,
+          "noncomm_spread": 4645,
+          "comm_long": 78363,
+          "comm_short": 3384,
+          "nonrept_long": 82925,
+          "nonrept_short": 116003,
+          "traders_total": 29,
+          "traders_noncomm_long": 7,
+          "traders_noncomm_short": 10,
+          "traders_comm_long": 12,
+          "traders_comm_short": 5
+        },
+        {
+          "date": "2026-07-21",
+          "oi": 2785508,
+          "noncomm_long": 263589,
+          "noncomm_short": 266222,
+          "noncomm_spread": 585481,
+          "comm_long": 1631108,
+          "comm_short": 1744971,
+          "nonrept_long": 305330,
+          "nonrept_short": 188835,
+          "traders_total": 476,
+          "traders_noncomm_long": 91,
+          "traders_noncomm_short": 68,
+          "traders_comm_long": 266,
+          "traders_comm_short": 203
+        },
         {
           "date": "2026-07-14",
           "oi": 2819884,
@@ -73,38 +105,6 @@
           "traders_noncomm_short": 7,
           "traders_comm_long": 16,
           "traders_comm_short": 7
-        },
-        {
-          "date": "2026-06-30",
-          "oi": 2816721,
-          "noncomm_long": 249528,
-          "noncomm_short": 281779,
-          "noncomm_spread": 597400,
-          "comm_long": 1665819,
-          "comm_short": 1754522,
-          "nonrept_long": 303974,
-          "nonrept_short": 183020,
-          "traders_total": 470,
-          "traders_noncomm_long": 91,
-          "traders_noncomm_short": 70,
-          "traders_comm_long": 258,
-          "traders_comm_short": 205
-        },
-        {
-          "date": "2026-06-30",
-          "oi": 203031,
-          "noncomm_long": 48091,
-          "noncomm_short": 51177,
-          "noncomm_spread": 5355,
-          "comm_long": 69957,
-          "comm_short": 4512,
-          "nonrept_long": 79627,
-          "nonrept_short": 141988,
-          "traders_total": 30,
-          "traders_noncomm_long": 8,
-          "traders_noncomm_short": 7,
-          "traders_comm_long": 15,
-          "traders_comm_short": 5
         }
       ]
     },
@@ -113,14 +113,30 @@
       "code": "RTY",
       "legacy": [
         {
-          "date": "2026-07-14",
-          "oi": 43911,
-          "noncomm_long": 17178,
-          "noncomm_short": 16448,
+          "date": "2026-07-21",
+          "oi": 35078,
+          "noncomm_long": 18009,
+          "noncomm_short": 11251,
+          "noncomm_spread": 227,
+          "comm_long": 8665,
+          "comm_short": 1632,
+          "nonrept_long": 8177,
+          "nonrept_short": 21968,
+          "traders_total": 26,
+          "traders_noncomm_long": 7,
+          "traders_noncomm_short": 8,
+          "traders_comm_long": 10,
+          "traders_comm_short": 1
+        },
+        {
+          "date": "2026-07-21",
+          "oi": 44531,
+          "noncomm_long": 17890,
+          "noncomm_short": 17134,
           "noncomm_spread": 1893,
-          "comm_long": 24612,
-          "comm_short": 25569,
-          "nonrept_long": 228,
+          "comm_long": 24490,
+          "comm_short": 25503,
+          "nonrept_long": 258,
           "nonrept_short": 1,
           "traders_total": 20,
           "traders_noncomm_long": 5,
@@ -143,6 +159,22 @@
           "traders_noncomm_short": 6,
           "traders_comm_long": 10,
           "traders_comm_short": 1
+        },
+        {
+          "date": "2026-07-14",
+          "oi": 43911,
+          "noncomm_long": 17178,
+          "noncomm_short": 16448,
+          "noncomm_spread": 1893,
+          "comm_long": 24612,
+          "comm_short": 25569,
+          "nonrept_long": 228,
+          "nonrept_short": 1,
+          "traders_total": 20,
+          "traders_noncomm_long": 5,
+          "traders_noncomm_short": 3,
+          "traders_comm_long": 7,
+          "traders_comm_short": 8
         },
         {
           "date": "2026-07-07",
@@ -175,38 +207,6 @@
           "traders_noncomm_short": 6,
           "traders_comm_long": 11,
           "traders_comm_short": 1
-        },
-        {
-          "date": "2026-06-30",
-          "oi": 25991,
-          "noncomm_long": 9021,
-          "noncomm_short": 8945,
-          "noncomm_spread": 83,
-          "comm_long": 9507,
-          "comm_short": 0,
-          "nonrept_long": 7380,
-          "nonrept_short": 16963,
-          "traders_total": 25,
-          "traders_noncomm_long": 7,
-          "traders_noncomm_short": 6,
-          "traders_comm_long": 12,
-          "traders_comm_short": 0
-        },
-        {
-          "date": "2026-06-30",
-          "oi": 42974,
-          "noncomm_long": 16918,
-          "noncomm_short": 15618,
-          "noncomm_spread": 1893,
-          "comm_long": 23935,
-          "comm_short": 25462,
-          "nonrept_long": 228,
-          "nonrept_short": 1,
-          "traders_total": 20,
-          "traders_noncomm_long": 5,
-          "traders_noncomm_short": 3,
-          "traders_comm_long": 6,
-          "traders_comm_short": 8
         }
       ]
     },
@@ -214,6 +214,22 @@
       "name": "VIX Futures",
       "code": "VX",
       "legacy": [
+        {
+          "date": "2026-07-21",
+          "oi": 396499,
+          "noncomm_long": 89049,
+          "noncomm_short": 165910,
+          "noncomm_spread": 78518,
+          "comm_long": 203265,
+          "comm_short": 127867,
+          "nonrept_long": 25667,
+          "nonrept_short": 24204,
+          "traders_total": 192,
+          "traders_noncomm_long": 74,
+          "traders_noncomm_short": 59,
+          "traders_comm_long": 47,
+          "traders_comm_short": 42
+        },
         {
           "date": "2026-07-14",
           "oi": 389109,
@@ -292,22 +308,6 @@
           "traders_noncomm_long": 51,
           "traders_noncomm_short": 68,
           "traders_comm_long": 53,
-          "traders_comm_short": 44
-        },
-        {
-          "date": "2026-06-09",
-          "oi": 410412,
-          "noncomm_long": 97085,
-          "noncomm_short": 171505,
-          "noncomm_spread": 81738,
-          "comm_long": 204993,
-          "comm_short": 132534,
-          "nonrept_long": 26596,
-          "nonrept_short": 24635,
-          "traders_total": 190,
-          "traders_noncomm_long": 61,
-          "traders_noncomm_short": 71,
-          "traders_comm_long": 44,
           "traders_comm_short": 44
         }
       ]
